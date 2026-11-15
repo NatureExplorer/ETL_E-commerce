@@ -8,21 +8,19 @@
   <b>From Raw CSV Files to Structured Data for Supply Chain Analytics</b>
 </p>
 
-Proyek ini berfokus pada pembangunan **Automated ETL (Extract, Transform, Load) pipeline** untuk mengolah berbagai file CSV yang berkaitan dengan E-commerce. Pipeline dirancang untuk mengurangi proses pengolahan data secara manual, mengintegrasikan data dari beberapa file, serta menyimpan hasil transformasi ke dalam database PostgreSQL agar lebih mudah diakses untuk kebutuhan analisis dan visualisasi data.
-
-Dengan memanfaatkan Pandas, Apache Airflow, PostgreSQL, dan Docker, proyek ini mengeksplorasi penerapan proses ETL yang terstruktur, terjadwal, dan dapat dijalankan dalam lingkungan yang terisolasi.
+This project focuses on building an **Automated ETL (Extract, Transform, Load) pipeline** to process various E-commerce-related CSV files. The pipeline is designed to minimize manual data processing, integrate data from multiple sources, and store the transformed output into a PostgreSQL database, making it readily accessible for data analysis and visualization. By leveraging Pandas, Apache Airflow, PostgreSQL, and Docker, this project explores the implementation of a structured, scheduled ETL process that operates within a secure, contained environment.
 
 ## 🎯 Project Objectives
 
-Tujuan utama proyek ini adalah membangun alur pengolahan data yang lebih terotomatisasi dan terorganisasi untuk mendukung analisis logistik dan rantai pasok.
+The primary objective of this project is to build a more automated and organized data processing pipeline to support E-Commerce analysis.
 
-- **Automated ETL:** Mengotomatisasi proses pembacaan dan pengolahan beberapa file CSV dari folder sumber.
-- **Data Transformation:** Melakukan pembersihan, transformasi, dan penyesuaian struktur data menggunakan pandas.
-- **Data Integration:** Mengintegrasikan data yang relevan dari berbagai sumber menjadi dataset yang lebih terstruktur.
-- **Centralized Storage:** Menyimpan hasil transformasi ke PostgreSQL sebagai basis data untuk kebutuhan analisis.
-- **Workflow Orchestration:** Mengatur urutan, penjadwalan, dan eksekusi pipeline menggunakan Apache Airflow.
-- **Containerized Environment:** Menggunakan Docker untuk mempermudah pengelolaan layanan dan konsistensi lingkungan eksekusi.
-- **Supply Chain Analytics:** Menyiapkan data yang telah diproses agar dapat digunakan pada tahap analisis dan visualisasi lebih lanjut.
+- **Automated ETL:** Automates the process of reading and handling multiple CSV files from a source folder.
+- **Data Transformation:** Performs data cleaning, transformation, and structural adjustments using pandas.
+- **Data Integration:** Integrates relevant data from various sources into a more structured dataset.
+- **Centralized Storage:** Stores transformed data into a PostgreSQL database for analytical purposes.
+- **Workflow Orchestration:** Manages the sequencing, scheduling, and execution of the pipeline using Apache Airflow.
+- **Containerized Environment:** Utilizes Docker to simplify service management and ensure consistency across execution environments.
+- **E-Commerce Analytics:** Prepares processed data for use in subsequent analysis and visualization stages.
 
 ## 🛠️ Tech Stack
 
@@ -32,66 +30,42 @@ Tujuan utama proyek ini adalah membangun alur pengolahan data yang lebih terotom
 | <img src="https://cdn.simpleicons.org/apacheairflow/017CEE" width="20" alt=""/> **Apache Airflow** | Orchestration | Mengatur dependensi, penjadwalan, dan monitoring task dalam pipeline ETL. |
 | <img src="https://cdn.simpleicons.org/docker/2496ED" width="20" alt=""/> **Docker** | Containerization | Menjalankan layanan dan dependensi dalam lingkungan container yang terisolasi. |
 
-## 🏗️ Pipeline Architecture
-
-```mermaid
-flowchart LR
-    A["📁 Source CSV Files"] --> B["⚡ Pandas<br/>Extract & Transform"]
-    B --> C["🐘 PostgreSQL<br/>Load & Storage"]
-    C --> D["📊 Analytics / BI Dashboard"]
-
-    E["🐳 Docker"] -.-> B
-    E -.-> C
-    E -.-> F["Airflow Services"]
-
-    F["🌬️ Apache Airflow"] --> G["Schedule & Orchestrate"]
-    G --> B
-
-    R["🔴 Redis<br/>Supporting Service"] -.-> F
-
-    style A fill:#E8F4FD,stroke:#2496ED,color:#17365D
-    style B fill:#FFF0DF,stroke:#E25A1C,color:#6D3200
-    style C fill:#E7F0FF,stroke:#4169E1,color:#17365D
-    style D fill:#E4F7E8,stroke:#2E8B57,color:#174D2A
-    style F fill:#E8F3FF,stroke:#017CEE,color:#17365D
-    style R fill:#FFE9E9,stroke:#DC382D,color:#6B1717
-```
 
 ### 🔄 ETL Workflow
 
 #### 1. Extract — Data Ingestion
 
-Pipeline membaca file CSV yang tersedia pada folder sumber. Pendekatan ini memungkinkan beberapa dataset diproses melalui alur yang sama tanpa harus melakukan pengolahan secara manual satu per satu.
+The pipeline reads CSV files located in the source folder. This approach allows multiple datasets to be processed through the same workflow, eliminating the need for manual, individual processing.
 
 #### 2. Transform — Data Processing
 
-Pandas digunakan untuk melakukan transformasi data sesuai kebutuhan, seperti:
+Pandas is used to perform data transformations as needed, such as:
 
-- Memeriksa struktur kolom dan tipe data.
-- Menangani nilai kosong dan inkonsistensi data.
-- Membersihkan atau menyesuaikan format data.
-- Menggabungkan dataset yang memiliki relasi.
-- Menyiapkan struktur data untuk penyimpanan dan analisis.
+- Examining column structures and data types.
+- Handling missing values ​​and data inconsistencies.
+- Cleaning or adjusting data formats.
+- Merging datasets that share relationships.
+- Preparing data structures for storage and analysis.
 
-Transformasi aktual mengikuti karakteristik dataset dan aturan bisnis yang diterapkan pada pipeline.
+The actual transformations depend on the characteristics of the dataset and the business rules applied to the pipeline.
 
 #### 3. Load — Data Storage
 
-Data hasil transformasi dimuat ke PostgreSQL agar tersimpan dalam struktur yang lebih terorganisasi dan dapat digunakan kembali tanpa harus mengulangi seluruh proses pengolahan dari file sumber.
+The transformed data is loaded into PostgreSQL, where it is stored in a more organized structure, allowing for reuse without the need to repeat the entire processing workflow from the source files.
 
 #### 4. Orchestration — Automated Execution
 
-Apache Airflow digunakan untuk mendefinisikan dan mengatur alur kerja ETL melalui DAG (*Directed Acyclic Graph*). Dengan orkestrasi ini, proses dapat dikonfigurasi untuk berjalan berdasarkan jadwal serta dipantau melalui antarmuka Airflow.
+Apache Airflow is used to define and manage the ETL workflow via a DAG (*Directed Acyclic Graph*). Through this orchestration, processes can be configured to run on a schedule and monitored via the Airflow interface.
 
 #### 5. Supporting Services — Docker
 
-Redis disediakan sebagai layanan pendukung sesuai kebutuhan konfigurasi proyek. Docker digunakan untuk menjalankan komponen pipeline dan dependensinya dalam lingkungan yang konsisten.
+Redis is included as a supporting service based on the project's configuration requirements. Docker is used to run the pipeline components and their dependencies within a consistent environment.
 
 #### 6. Analytics — Downstream Usage
 
-Data yang telah tersimpan di PostgreSQL dapat diakses oleh tools analisis atau visualisasi, seperti Power BI dan Tableau, untuk mendukung eksplorasi data dan penyusunan dashboard E-commerce.
+Data stored in PostgreSQL can be accessed by analytical or visualization tools—such as Power BI and Tableau—to facilitate data exploration and the creation of e-commerce dashboards.
 
-> **Catatan:** Integrasi dashboard merupakan tahap downstream yang dapat dikembangkan setelah pipeline dan struktur data siap.
+> **Note:** Dashboard integration is a downstream phase that can be developed once the pipeline and data structure are ready.
 
 <!-- ## 📂 Project Structure
 
@@ -126,45 +100,45 @@ ETLogistic/
 
 ## ⚙️ Prerequisites
 
-Pastikan perangkat dan lingkungan pengembangan memiliki kebutuhan berikut:
+Ensure that your device and development environment meet the following requirements:
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) atau Docker Engine.
-- [Python](https://www.python.org/) sesuai versi yang kompatibel dengan dependensi proyek.
-- [Git](https://git-scm.com/) untuk version control.
-- WSL 2 jika menjalankan Docker dan proses ETL melalui lingkungan Linux di Windows.
-- File CSV sumber yang tersedia pada direktori yang telah dikonfigurasi.
-- Konfigurasi koneksi PostgreSQL serta layanan pendukung yang dibutuhkan oleh Docker Compose.
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) or Docker Engine.
+- [Python](https://www.python.org/) (a version compatible with the project's dependencies).
+- [Git](https://git-scm.com/) for version control.
+- WSL 2, if running Docker and ETL processes via a Linux environment on Windows.
+- Source CSV files, placed in the configured directory.
+- PostgreSQL connection configuration and any other supporting services required by Docker Compose.
 
 ## 🚀 Getting Started
 
-### 1. Clone Repository
+### 1. Clone the Repository
 
 ```bash
 git clone <repository-url>
 cd project-logistic-etl
 ```
 
-Ganti `<repository-url>` dengan URL repositori GitHub proyek.
+Replace `<repository-url>` with the GitHub repository URL for the project.
 
 ### 2. Configure Environment Variables
 
-Jika proyek menggunakan file `.env`, buat file tersebut berdasarkan template yang disediakan.
+If the project uses an `.env` file, create one based on the provided template.
 
 ```bash
 cp .env.example .env
 ```
 
-Sesuaikan konfigurasi koneksi database dan layanan lain dengan lingkungan lokal. Jangan mengunggah kredensial asli ke repositori publik.
+Adjust the database connection settings and other service configurations to match your local environment. Do not upload actual credentials to a public repository.
 
 ### 3. Prepare Source Data
 
-Tempatkan file CSV pada direktori sumber yang sesuai dengan konfigurasi pipeline.
+Place the CSV files in the source directory as required by the pipeline configuration.
 
 ```text
 Kode/
 └── Dataset/
     └── Ecommerce/
-        └── Train
+        └── train
               ├── df_Customers.csv
               ├── df_OrderItems.csv
               ├── df_Orders.csv
@@ -172,62 +146,63 @@ Kode/
               └── df_Products.csv
 ```
 
-Nama file di atas hanya ilustrasi. Gunakan dataset aktual yang tersedia pada proyek.
+The filenames above are for illustration purposes only. Use the actual datasets provided for the project.
 
 ### 4. Start Services with Docker
 
-Jika `docker-compose.yml` telah dikonfigurasi untuk menjalankan seluruh layanan yang diperlukan:
+If a `docker-compose.yml` file has been configured to run all necessary services:
 
 ```bash
 docker compose up -d --build
 ```
 
-Periksa status container:
+Check the status of the containers:
 
 ```bash
 docker compose ps
 ```
 
-Periksa log layanan jika terjadi kendala:
+Check the service logs if any issues arise:
 
 ```bash
 docker compose logs
 ```
+```
 
 ### 5. Run the ETL Pipeline
 
-Setelah seluruh layanan siap, jalankan pipeline melalui DAG Airflow sesuai konfigurasi proyek. Pastikan koneksi database dan lokasi file sumber.
+Once all services are ready, run the pipeline via the Airflow DAG according to the project configuration. Verify the database connections and the locations of the source files.
 
-Jika Airflow menggunakan pemetaan port standar, antarmukanya dapat diakses melalui:
+If Airflow is using the standard port mapping, its interface can be accessed at:
 
 ```text
 http://localhost:8080
 ```
 
-Aktifkan atau jalankan DAG ETL sesuai pengaturan yang tersedia pada lingkungan Airflow.
+Activate or run the ETL DAG according to the settings available in the Airflow environment.
 
 ### 6. Verify the Output
 
-Periksa tabel hasil ETL pada PostgreSQL untuk memastikan bahwa data telah berhasil dimuat dan dapat digunakan untuk analisis lebih lanjut.
+Check the ETL result tables in PostgreSQL to ensure that the data has been successfully loaded and is ready for further analysis.
 
 ## 📊 Expected Outcome
 
-Hasil yang ingin dicapai dari proyek ini meliputi:
+The desired outcomes for this project include:
 
-- Pengolahan beberapa file CSV melalui satu pipeline ETL yang terstruktur.
-- Pengurangan pekerjaan manual dalam proses ingestion dan transformasi data.
-- Data hasil transformasi yang tersimpan secara terpusat di PostgreSQL.
-- Workflow yang dapat dijadwalkan dan dipantau melalui Apache Airflow.
-- Lingkungan eksekusi yang lebih konsisten melalui Docker.
-- Dataset yang siap dikembangkan untuk kebutuhan analisis dan visualisasi E-commerce.
+- Processing multiple CSV files through a single, structured ETL pipeline.
+- Reducing manual effort in the data ingestion and transformation processes.
+- Storing transformed data centrally in a PostgreSQL database.
+- Establishing a workflow that can be scheduled and monitored via Apache Airflow.
+- Ensuring a more consistent execution environment through the use of Docker.
+- Preparing datasets that are ready for further development to support e-commerce analysis and visualization.
 
 ## 🔮 Future Improvements
 
-Beberapa pengembangan yang dapat dilakukan selanjutnya:
+Potential future enhancements include:
 
-- **Data Quality Checks:** Menambahkan validasi skema, nilai kosong, duplikasi, dan integritas data.
-- **Incremental ETL:** Memproses hanya data baru atau data yang mengalami perubahan.
-- **Pipeline Monitoring:** Menambahkan logging, notifikasi kegagalan, dan pemantauan durasi task.
-- **Data Modeling:** Mengembangkan skema analitik seperti star schema apabila dibutuhkan untuk pelaporan.
-- **BI Integration:** Menghubungkan PostgreSQL dengan Power BI atau Tableau untuk membangun dashboard.
-- **Performance Optimization:** Menyesuaikan partisi, ukuran data, dan konfigurasi Spark berdasarkan kebutuhan pemrosesan.
+- **Data Quality Checks:** Implementing schema validation, handling null values, identifying duplicates, and ensuring data integrity.
+- **Incremental ETL:** Processing only new or modified data.
+- **Pipeline Monitoring:** Adding logging, failure notifications, and task duration monitoring.
+- **Data Modeling:** Developing analytical schemas, such as a star schema, if required for reporting purposes.
+- **BI Integration:** Connecting PostgreSQL to tools like Power BI or Tableau to build dashboards.
+- **Performance Optimization:** Adjusting partitioning, data sizing, and Spark configurations based on processing requirements..
