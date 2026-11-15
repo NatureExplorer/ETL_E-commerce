@@ -8,8 +8,8 @@ SCRIPTS_DIR = Path("/opt/airflow/scripts")
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-from Silver_layer import table_silver_transaction
-from Gold_layer import agregated_order_bytime, agregated_revenue_bycategory, agregated_city_byorder, ratio_shipandprice_bycity
+from Silver_layer import table_silver_transaction, silver_transform_customers, silver_transform_orders, silver_transform_orders_item, silver_transform_products, silver_transform_payments
+from Gold_layer import agregated_order_bytime, agregated_revenue_bycategory, ratio_shipandprice_bycity
 from load_db import gold_to_db
 
 
@@ -29,13 +29,17 @@ def orders_medallion_pipe():
 
     @task()
     def silver_layer():
+        silver_transform_customers()
+        silver_transform_orders()
+        silver_transform_orders_item()
+        silver_transform_products()
+        silver_transform_payments()
         table_silver_transaction()
 
     @task()
     def gold_layer():
         agregated_order_bytime()
         agregated_revenue_bycategory()
-        agregated_city_byorder()
         ratio_shipandprice_bycity()
 
     @task()

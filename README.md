@@ -1,4 +1,4 @@
-# 🚚 Logistic dan Supply Chain — Data Pipeline ETL
+# 🚚 E-commerce — Data Pipeline ETL
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-In%20Development-yellow" alt="Project Status"/>
@@ -8,16 +8,16 @@
   <b>From Raw CSV Files to Structured Data for Supply Chain Analytics</b>
 </p>
 
-Proyek ini berfokus pada pembangunan **Automated ETL (Extract, Transform, Load) pipeline** untuk mengolah berbagai file CSV yang berkaitan dengan logistik dan *supply chain*. Pipeline dirancang untuk mengurangi proses pengolahan data secara manual, mengintegrasikan data dari berbagai sumber file, serta menyimpan hasil transformasi ke dalam database PostgreSQL agar lebih mudah diakses untuk kebutuhan analisis dan visualisasi data.
+Proyek ini berfokus pada pembangunan **Automated ETL (Extract, Transform, Load) pipeline** untuk mengolah berbagai file CSV yang berkaitan dengan E-commerce. Pipeline dirancang untuk mengurangi proses pengolahan data secara manual, mengintegrasikan data dari beberapa file, serta menyimpan hasil transformasi ke dalam database PostgreSQL agar lebih mudah diakses untuk kebutuhan analisis dan visualisasi data.
 
-Dengan memanfaatkan PySpark, Apache Airflow, Redis, dan Docker, proyek ini mengeksplorasi penerapan proses ETL yang terstruktur, terjadwal, dan dapat dijalankan dalam lingkungan yang terisolasi.
+Dengan memanfaatkan Pandas, Apache Airflow, PostgreSQL, dan Docker, proyek ini mengeksplorasi penerapan proses ETL yang terstruktur, terjadwal, dan dapat dijalankan dalam lingkungan yang terisolasi.
 
 ## 🎯 Project Objectives
 
 Tujuan utama proyek ini adalah membangun alur pengolahan data yang lebih terotomatisasi dan terorganisasi untuk mendukung analisis logistik dan rantai pasok.
 
 - **Automated ETL:** Mengotomatisasi proses pembacaan dan pengolahan beberapa file CSV dari folder sumber.
-- **Data Transformation:** Melakukan pembersihan, transformasi, dan penyesuaian struktur data menggunakan PySpark.
+- **Data Transformation:** Melakukan pembersihan, transformasi, dan penyesuaian struktur data menggunakan pandas.
 - **Data Integration:** Mengintegrasikan data yang relevan dari berbagai sumber menjadi dataset yang lebih terstruktur.
 - **Centralized Storage:** Menyimpan hasil transformasi ke PostgreSQL sebagai basis data untuk kebutuhan analisis.
 - **Workflow Orchestration:** Mengatur urutan, penjadwalan, dan eksekusi pipeline menggunakan Apache Airflow.
@@ -28,17 +28,15 @@ Tujuan utama proyek ini adalah membangun alur pengolahan data yang lebih terotom
 
 | Technology | Role | Description |
 |---|---|---|
-| <img src="https://cdn.simpleicons.org/apachespark/E25A1C" width="20" alt=""/> **PySpark** | Data Processing | Memproses dan mentransformasikan data CSV secara terstruktur dengan Spark DataFrame. |
 | <img src="https://cdn.simpleicons.org/postgresql/4169E1" width="20" alt=""/> **PostgreSQL** | Database | Menyimpan data hasil ETL agar dapat diakses untuk analisis dan kebutuhan downstream. |
 | <img src="https://cdn.simpleicons.org/apacheairflow/017CEE" width="20" alt=""/> **Apache Airflow** | Orchestration | Mengatur dependensi, penjadwalan, dan monitoring task dalam pipeline ETL. |
-| <img src="https://cdn.simpleicons.org/redis/DC382D" width="20" alt=""/> **Redis** | Supporting Service | Menyediakan layanan in-memory yang dapat digunakan untuk kebutuhan caching atau komponen pendukung sesuai konfigurasi. |
 | <img src="https://cdn.simpleicons.org/docker/2496ED" width="20" alt=""/> **Docker** | Containerization | Menjalankan layanan dan dependensi dalam lingkungan container yang terisolasi. |
 
 ## 🏗️ Pipeline Architecture
 
 ```mermaid
 flowchart LR
-    A["📁 Source CSV Files"] --> B["⚡ PySpark<br/>Extract & Transform"]
+    A["📁 Source CSV Files"] --> B["⚡ Pandas<br/>Extract & Transform"]
     B --> C["🐘 PostgreSQL<br/>Load & Storage"]
     C --> D["📊 Analytics / BI Dashboard"]
 
@@ -67,7 +65,7 @@ Pipeline membaca file CSV yang tersedia pada folder sumber. Pendekatan ini memun
 
 #### 2. Transform — Data Processing
 
-PySpark digunakan untuk melakukan transformasi data sesuai kebutuhan, seperti:
+Pandas digunakan untuk melakukan transformasi data sesuai kebutuhan, seperti:
 
 - Memeriksa struktur kolom dan tipe data.
 - Menangani nilai kosong dan inkonsistensi data.
@@ -85,15 +83,15 @@ Data hasil transformasi dimuat ke PostgreSQL agar tersimpan dalam struktur yang 
 
 Apache Airflow digunakan untuk mendefinisikan dan mengatur alur kerja ETL melalui DAG (*Directed Acyclic Graph*). Dengan orkestrasi ini, proses dapat dikonfigurasi untuk berjalan berdasarkan jadwal serta dipantau melalui antarmuka Airflow.
 
-#### 5. Supporting Services — Redis & Docker
+#### 5. Supporting Services — Docker
 
 Redis disediakan sebagai layanan pendukung sesuai kebutuhan konfigurasi proyek. Docker digunakan untuk menjalankan komponen pipeline dan dependensinya dalam lingkungan yang konsisten.
 
 #### 6. Analytics — Downstream Usage
 
-Data yang telah tersimpan di PostgreSQL dapat diakses oleh tools analisis atau visualisasi, seperti Power BI dan Tableau, untuk mendukung eksplorasi data dan penyusunan dashboard logistik.
+Data yang telah tersimpan di PostgreSQL dapat diakses oleh tools analisis atau visualisasi, seperti Power BI dan Tableau, untuk mendukung eksplorasi data dan penyusunan dashboard E-commerce.
 
-> **Catatan:** Integrasi dashboard merupakan tahap downstream yang dapat dikembangkan setelah pipeline dan struktur data siap. Redis juga tidak dianggap sebagai media penyimpanan utama data warehouse.
+> **Catatan:** Integrasi dashboard merupakan tahap downstream yang dapat dikembangkan setelah pipeline dan struktur data siap.
 
 <!-- ## 📂 Project Structure
 
@@ -109,10 +107,10 @@ ETLogistic/
 ├── dags/
 │   └── logistic_etl_dag.py  # DAG untuk orkestrasi ETL
 │
-├── src/
-│   ├── extract.py           # Proses pembacaan data
-│   ├── transform.py         # Transformasi data menggunakan PySpark
-│   └── load.py              # Proses pemuatan ke PostgreSQL
+├── Kode/
+│   ├── Silver_layer.py           # Proses transformasi data menggunakan pandas
+│   ├── Gold_layer.py         # Agregasi data sesuai kebutuhan bisnis
+│   └── load_db.py              # Proses pemuatan ke PostgreSQL
 │
 ├── notebooks/               # Eksplorasi dan pengujian (opsional)
 │
@@ -198,7 +196,7 @@ docker compose logs
 
 ### 5. Run the ETL Pipeline
 
-Setelah seluruh layanan siap, jalankan pipeline melalui DAG Airflow sesuai konfigurasi proyek. Pastikan koneksi database, lokasi file sumber, dan dependensi PySpark telah dikonfigurasi dengan benar.
+Setelah seluruh layanan siap, jalankan pipeline melalui DAG Airflow sesuai konfigurasi proyek. Pastikan koneksi database dan lokasi file sumber.
 
 Jika Airflow menggunakan pemetaan port standar, antarmukanya dapat diakses melalui:
 
@@ -221,7 +219,7 @@ Hasil yang ingin dicapai dari proyek ini meliputi:
 - Data hasil transformasi yang tersimpan secara terpusat di PostgreSQL.
 - Workflow yang dapat dijadwalkan dan dipantau melalui Apache Airflow.
 - Lingkungan eksekusi yang lebih konsisten melalui Docker.
-- Dataset yang siap dikembangkan untuk kebutuhan analisis dan visualisasi logistik.
+- Dataset yang siap dikembangkan untuk kebutuhan analisis dan visualisasi E-commerce.
 
 ## 🔮 Future Improvements
 

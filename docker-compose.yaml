@@ -22,11 +22,11 @@ x-airflow-common: &airflow-common
     PYTHONPATH: /opt/airflow/scripts
 
   volumes:
-    - ./airflow/dags:/opt/airflow/dags
-    - ./Kode:/opt/airflow/scripts
-    - ./airflow/logs:/opt/airflow/logs
-    - ./airflow/plugins:/opt/airflow/plugins
-    - ./Kode/Dataset/Ecommerce/train:/opt/airflow/data/bronze
+    - ${AIRFLOW_DAGS_DIR}:/opt/airflow/dags
+    - ${AIRFLOW_SCRIPT}:/opt/airflow/scripts
+    - ${AIRFLOW_LOGS_DIR}:/opt/airflow/logs
+    - ${AIRFLOW_PLUGINS_DIR}:/opt/airflow/plugins
+    - ${AIRFLOW_DATA}:/opt/airflow/data
 
 services:
   postgres:

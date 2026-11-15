@@ -4,3 +4,5 @@ Kode/Dataset/Ecommerce/test
 Kode/__pycache__
 airflow/logs/
 airflow/dags/__pycache__
+/home/alam/DW/ETLogistic/Kode/Dataset/Ecommerce/train/silver
+/home/alam/DW/ETLogistic/Kode/Dataset/Ecommerce/train/gold

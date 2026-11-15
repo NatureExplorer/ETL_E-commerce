@@ -2,7 +2,7 @@ import pandas as pd
 import sys
 from pathlib import Path
 
-SCRIPTS_DIR = Path(f"/opt/airflow/data")
+SCRIPTS_DIR = Path("/opt/airflow/data")
 
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
@@ -11,13 +11,9 @@ gold_path = Path("/opt/airflow/data/gold")
 gold_path.mkdir(parents=True, exist_ok=True)
 
 
-data_transaction = pd.read_csv('/opt/airflow/data/silver/silver_transaction.csv')
-data_payments = pd.read_csv('/opt/airflow/data/silver/silver_payments.csv')
-
-
 def agregated_order_bytime():
-
-    agg = (data_transaction.groupby('order_purchase_timestamp').agg(
+    data_transaction = pd.read_csv('/opt/airflow/data/silver/silver_transaction.csv')
+    agg = (data_transaction.groupby('order_approved_at').agg(
         total_orders=('order_id', 'count'),
         total_revenue =('price', 'sum')
     ).reset_index())
@@ -26,6 +22,7 @@ def agregated_order_bytime():
 
 
 def agregated_revenue_bycategory():
+    data_transaction = pd.read_csv('/opt/airflow/data/silver/silver_transaction.csv')
     agg = (data_transaction.groupby('product_category_name').agg(
         total_orders=('order_id', 'count'),
         total_revenue =('price', 'sum')
@@ -34,17 +31,10 @@ def agregated_revenue_bycategory():
     agg.to_csv('/opt/airflow/data/gold/aggregated_revenue_bycategory.csv', index=False)
 
 
-def agregated_city_byorder():
-    agg = (data_transaction.groupby('customer_city').agg(
-        total_orders=('order_id', 'count'),
-        total_revenue =('price', 'sum')
-    ).reset_index())
-
-    agg.to_csv('/opt/airflow/data/gold/aggregated_city_byorder.csv', index=False)
-
 
 def ratio_shipandprice_bycity():
-    agg = (data_transaction.groupby('customer_city').agg(
+    data_transaction = pd.read_csv('/opt/airflow/data/silver/silver_transaction.csv')
+    agg = (data_transaction.groupby('customer_state').agg(
         total_orders=('order_id', 'count'),
         total_revenue =('price', 'sum'),
         total_shipping_charges=('shipping_charges', 'sum')
