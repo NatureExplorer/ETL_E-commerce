@@ -14,16 +14,16 @@ from load_db import gold_to_db
 
 
 @dag(
-    dag_id="orders_medallion_pipe",
+    dag_id="E-Commerce Medallion Architecture",
     start_date=datetime(2026, 11, 9),
-    schedule="*/30 * * * *",
+    schedule=timedelta(days=1),
     catchup=False,
     default_args={
         "owner": "airflow",
         "retries": 1,
         "retry_delay": timedelta(minutes=5),
     },
-    tags=["ETL", "Medallion Architecture"],
+    tags=["ETL", "Medallion Architecture", "E-Commerce"],
 )
 def orders_medallion_pipe():
 
