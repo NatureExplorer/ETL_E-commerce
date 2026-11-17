@@ -12,7 +12,7 @@ silver_path.mkdir(parents=True, exist_ok=True)
 
 def silver_transform_customers():
     # Load the bronze customers data
-    bronze_customers = pd.read_csv('/opt/airflow/data/df_Customers.csv')
+    bronze_customers = pd.read_csv('/opt/airflow/data/bronze/df_Customers.csv')
 
     # Perform transformations to create the silver customers data
     silver_customers = bronze_customers.copy()
@@ -40,12 +40,12 @@ def silver_transform_customers():
             print(f"column {silver_customers[i]} no have missing value")
     
 
-    print("=============================done transformation silver transaction=============================")
+    print("=============================done transformation silver customer=============================")
     return silver_customers
 
 def silver_transform_orders():
     # Load the bronze orders data
-    bronze_orders = pd.read_csv('/opt/airflow/data/df_Orders.csv')
+    bronze_orders = pd.read_csv('/opt/airflow/data/bronze/df_Orders.csv')
 
     # transformations to create the silver orders data
     silver_orders = bronze_orders.copy()
@@ -89,7 +89,7 @@ def silver_transform_orders():
 
 def silver_transform_orders_item():
     # Load the bronze order items data
-    bronze_order_items = pd.read_csv('/opt/airflow/data/df_OrderItems.csv')
+    bronze_order_items = pd.read_csv('/opt/airflow/data/bronze/df_OrderItems.csv')
 
     # Perform transformations to create the silver order items data
     silver_order_items = bronze_order_items.copy()
@@ -126,7 +126,7 @@ def silver_transform_orders_item():
 
 def silver_transform_products():
     # Load the bronze products data
-    bronze_products = pd.read_csv('/opt/airflow/data/df_Products.csv')
+    bronze_products = pd.read_csv('/opt/airflow/data/bronze/df_Products.csv')
 
     # Perform transformations to create the silver products data
     silver_products = bronze_products.copy()
@@ -160,7 +160,7 @@ def silver_transform_products():
 
 def silver_transform_payments():
     # Load the bronze payments data
-    bronze_payments = pd.read_csv('/opt/airflow/data/df_Payments.csv')
+    bronze_payments = pd.read_csv('/opt/airflow/data/bronze/df_Payments.csv')
 
     # Perform transformations to create the silver payments data
     silver_payments = bronze_payments.copy()
@@ -189,7 +189,7 @@ def silver_transform_payments():
             print(f"column {silver_payments[i]} no have missing value")
             
         
-        print("=============================done transformation silver products=============================")
+        print("=============================done transformation silver payments=============================")
     return silver_payments
 
 
