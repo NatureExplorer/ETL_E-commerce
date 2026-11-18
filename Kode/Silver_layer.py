@@ -113,18 +113,24 @@ def silver_transform_products():
     silver_products = bronze_products.copy()
     print('silver_products before transformation')   
     print(f"how many null data in product_id before transformation:{silver_products['product_id'].isnull().sum()}")
+    print(f"how many null data in category name before transformation:{silver_products['product_category_name'].isnull().sum()}")
     
     #delete column that are not needed
     silver_products = silver_products.drop(columns=['product_weight_g', 'product_length_cm', 'product_height_cm', 'product_width_cm'])
 
-    silver_products = silver_products.dropna()
     silver_products['product_id'] = silver_products['product_id'].astype(str)
     silver_products['product_category_name'] = silver_products['product_category_name'].astype(str)
+    silver_products['product_category_name'] = silver_products['product_category_name'].fillna('Unknown')
 
     print('silver_products after transformation')
     print(f"how many null data in product_id after transformation:{silver_products['product_id'].isnull().sum()}")
+    print(f"how many null data in category name after transformation:{silver_products['product_category_name'].isnull().sum()}")
+
     print("=============================done transformation silver products=============================")
+
     return silver_products.to_csv('/opt/airflow/data/silver/silver_products.csv')
+
+
 def table_silver_transaction():
     # Load the silver data
     silver_orders = silver_transform_orders()
