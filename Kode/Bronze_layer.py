@@ -17,7 +17,7 @@ def ingest_customer_to_bronze():
 
     df_customer = pd.concat([customer_train,customer_test],ignore_index=True)
     print('===ingest and concat customer data done===')
-    return df_customer.to_csv('/opt/airflow/data/bronze/df_Customers.csv')
+    return df_customer.to_csv('/opt/airflow/data/bronze/df_Customers.csv', index=False)
 
 def ingest_orderitems_to_bronze():
     orderitems_train = pd.read_csv('/opt/airflow/data/train/df_OrderItems.csv')
@@ -25,7 +25,7 @@ def ingest_orderitems_to_bronze():
 
     df_orderitems = pd.concat([orderitems_train,orderitems_test],ignore_index=True)
     print('===ingest and concat order items data done===')
-    return df_orderitems.to_csv('/opt/airflow/data/bronze/df_OrderItems.csv')
+    return df_orderitems.to_csv('/opt/airflow/data/bronze/df_OrderItems.csv', index=False)
 
 def ingest_order_to_bronze():
     order_train = pd.read_csv('/opt/airflow/data/train/df_Orders.csv')
@@ -33,7 +33,7 @@ def ingest_order_to_bronze():
 
     df_order = pd.concat([order_train,order_test],ignore_index=True)
     print('===ingest and concat order data done===')
-    return df_order.to_csv('/opt/airflow/data/bronze/df_Orders.csv')
+    return df_order.to_csv('/opt/airflow/data/bronze/df_Orders.csv', index=False)
 
 def ingest_payments_to_bronze():
     payments_train = pd.read_csv('/opt/airflow/data/train/df_Payments.csv')
@@ -41,7 +41,7 @@ def ingest_payments_to_bronze():
 
     df_payments = pd.concat([payments_train,payments_test],ignore_index=True)
     print('===ingest and concat payments data done===')
-    return df_payments.to_csv('/opt/airflow/data/bronze/df_Payments.csv')
+    return df_payments.to_csv('/opt/airflow/data/bronze/df_Payments.csv', index=False)
 
 def ingest_Products_to_bronze():
     Products_train = pd.read_csv('/opt/airflow/data/train/df_Products.csv')
@@ -49,6 +49,6 @@ def ingest_Products_to_bronze():
 
     df_Products = pd.concat([Products_train,Products_test],ignore_index=True)
     print('===ingest and concat Products data done===')
-    return df_Products.to_csv('/opt/airflow/data/bronze/df_Products.csv')
+    return df_Products.to_csv('/opt/airflow/data/bronze/df_Products.csv', index=False)
 
 
