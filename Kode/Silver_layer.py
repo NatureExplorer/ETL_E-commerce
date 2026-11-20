@@ -12,7 +12,7 @@ silver_path.mkdir(parents=True, exist_ok=True)
 
 def silver_transform_customers():
     # Load the bronze customers data
-    bronze_customers = pd.read_csv('/opt/airflow/data/bronze/df_Customers')
+    bronze_customers = pd.read_csv('/opt/airflow/data/bronze/df_Customers.csv')
 
     # Perform transformations to create the silver customers data
     silver_customers = bronze_customers.copy()
@@ -20,7 +20,6 @@ def silver_transform_customers():
     print(f"how many duplicate data in customer_id before transformation:{silver_customers['customer_id'].duplicated().sum()}")
 
     silver_customers = silver_customers.drop(columns=['customer_zip_code_prefix'])
-    silver_customers = silver_customers.dropna()
     silver_customers['customer_id'] = silver_customers['customer_id'].astype(str).drop_duplicates()
     silver_customers['customer_city'] = silver_customers['customer_city'].astype(str)
     silver_customers['customer_state'] = silver_customers['customer_state'].astype(str)
@@ -67,8 +66,6 @@ def silver_transform_orders_item():
     print('silver_order_items before transformation')
     print(f"how many duplicated data in order_id before transformation:{silver_order_items['order_id'].duplicated().sum()}")
 
-
-    silver_order_items = silver_order_items.dropna()
     silver_order_items['order_id'] = silver_order_items['order_id'].astype(str).drop_duplicates()
     silver_order_items['product_id'] = silver_order_items['product_id'].astype(str)
     silver_order_items['seller_id'] = silver_order_items['seller_id'].astype(str)
@@ -92,7 +89,6 @@ def silver_transform_payments():
 
     silver_payments = silver_payments.drop(columns=['payment_installments', 'payment_sequential'])
 
-    silver_payments = silver_payments.dropna()
     silver_payments['order_id'] = silver_payments['order_id'].astype(str).drop_duplicates()
     silver_payments['payment_type'] = silver_payments['payment_type'].astype(str)
     silver_payments['payment_value'] = silver_payments['payment_value'].astype(float)
