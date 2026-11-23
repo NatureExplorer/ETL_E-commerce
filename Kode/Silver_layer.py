@@ -23,6 +23,7 @@ def silver_transform_customers():
     silver_customers['customer_id'] = silver_customers['customer_id'].astype(str).drop_duplicates()
     silver_customers['customer_city'] = silver_customers['customer_city'].astype(str)
     silver_customers['customer_state'] = silver_customers['customer_state'].astype(str)
+    silver_customers["customer_state"] = silver_customers["customer_state"].fillna("tidak diketahui")
 
     print('after transformation')
     print(f"how many duplicate data in customer_id after transformation:{silver_customers['customer_id'].duplicated().sum()}")
@@ -46,8 +47,12 @@ def silver_transform_orders():
     # convert from y-m-d h:m:s to month-year format
     silver_orders['order_purchase_timestamp'] = pd.to_datetime(silver_orders['order_purchase_timestamp']).dt.date
     silver_orders['order_approved_at'] = pd.to_datetime(silver_orders['order_approved_at']).dt.date
+
     silver_orders['order_estimated_delivery_date'] = pd.to_datetime(silver_orders['order_estimated_delivery_date']).dt.date
+    silver_orders['order_estimated_delivery_date'] =silver_orders['order_estimated_delivery_date'].dt.normalize()
+    
     silver_orders['order_delivered_timestamp'] = pd.to_datetime(silver_orders['order_delivered_timestamp']).dt.date
+    silver_orders['order_delivered_timestamp'] = silver_orders['order_delivered_timestamp'].dt.normalize()
     
     print('silver_orders after transformation')
     print(f"how many duplicated data in order_id after transformation:{silver_orders['order_id'].duplicated().sum()}")
@@ -92,6 +97,7 @@ def silver_transform_payments():
     silver_payments['order_id'] = silver_payments['order_id'].astype(str).drop_duplicates()
     silver_payments['payment_type'] = silver_payments['payment_type'].astype(str)
     silver_payments['payment_value'] = silver_payments['payment_value'].astype(float)
+    silver_payments['payment_type'] = silver_payments['payment_type'].filnna('Unknown')
 
     print('silver_payments after transformation')
     print(f"how many duplicated data in order_id after transformation:{silver_payments['order_id'].duplicated().sum()}")   
