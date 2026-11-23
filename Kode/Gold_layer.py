@@ -37,17 +37,13 @@ def prepare_transaction(tx, prod):
     if len(tx) != n_rows:
         raise ValueError(f"Jumlah baris berubah setelah join produk: {n_rows} -> {len(tx)}")
 
-    tx["product_category_name"] = tx["product_category_name"].fillna("tidak terkategori")
-    tx["customer_state"] = tx["customer_state"].fillna("tidak diketahui")
-    tx["payment_type"] = tx["payment_type"].fillna("tidak diketahui")
 
     tx["year_month"] = tx["order_purchase_timestamp"].dt.strftime("%Y-%m")
 
     is_delivered = tx["order_status"].eq("delivered")
 
-    delivered_day = tx["order_delivered_timestamp"].dt.normalize()
-    estimated_day = tx["order_estimated_delivery_date"].dt.normalize()
-    purchase_day = tx["order_purchase_timestamp"].dt.normalize()
+    delivered_day = tx["order_delivered_timestamp"]
+    estimated_day = tx["order_estimated_delivery_date"]
     measurable = is_delivered & delivered_day.notna()
     delay_days = (delivered_day - estimated_day).dt.days
 
