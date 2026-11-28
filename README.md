@@ -52,7 +52,6 @@ This project builds an automated ETL pipeline that cleans the data, quarantines 
 | Silver tables | `/opt/airflow/data/silver/` | `silver_transaction.csv`, `silver_products.csv`, and `quarantine_null_rows.csv` |
 | Gold CSV files | `/opt/airflow/data/gold/` | `dim_region`, `dim_product`, `dim_payment`, `fact_sales` |
 | PostgreSQL tables | `gold` schema | Star schema used as the source for SQL analysis |
-| Analysis queries | `sql/` | Queries designed to answer six business questions (see [Analysis and Findings](#analysis-and-findings)) |
 
 ## Architecture
 
