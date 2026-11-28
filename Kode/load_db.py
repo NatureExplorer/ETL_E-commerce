@@ -34,7 +34,7 @@ def gold_to_db():
 
     CREATE TABLE IF NOT EXISTS {SCHEMA}.dim_product (
         product_key            INT PRIMARY KEY,
-        product_category_name  VARCHAR NOT NULL UNIQUE
+        product_category_name  VARCHAR UNIQUE
     );
 
     CREATE TABLE IF NOT EXISTS {SCHEMA}.dim_payment (

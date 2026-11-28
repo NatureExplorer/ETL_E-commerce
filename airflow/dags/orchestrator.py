@@ -35,8 +35,7 @@ def orders_medallion_pipe():
 
     @task()
     def silver_layer():
-        from Silver_layer import table_silver_transaction, silver_transform_products
-        silver_transform_products()
+        from Silver_layer import table_silver_transaction
         table_silver_transaction()
 
     @task()

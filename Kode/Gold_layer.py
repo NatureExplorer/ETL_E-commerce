@@ -42,8 +42,8 @@ def prepare_transaction(tx, prod):
 
     is_delivered = tx["order_status"].eq("delivered")
 
-    delivered_day = tx["order_delivered_timestamp"]
-    estimated_day = tx["order_estimated_delivery_date"]
+    delivered_day = tx["order_delivered_timestamp"].dt.normalize()
+    estimated_day = tx["order_estimated_delivery_date"].dt.normalize()
     measurable = is_delivered & delivered_day.notna()
     delay_days = (delivered_day - estimated_day).dt.days
 
