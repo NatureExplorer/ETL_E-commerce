@@ -85,13 +85,13 @@ PostgreSQL (gold schema) → SQL Analysis
 | Environment | Docker / Docker Compose |
 | Data Analysis | SQL (PostgreSQL) |
 
-## Folder Structure
+<!-- ## Folder Structure
 
 ```text
 ETLogistic/
 ├── dags/
 │   └── orchestrator.py        # Airflow DAG definition
-├── scripts/
+├── kode/
 │   ├── bronze_layer.py        # Data extraction
 │   ├── Silver_layer.py        # Data transformation and quarantine
 │   ├── gold_layer.py    # Star schema implementation
@@ -104,7 +104,7 @@ ETLogistic/
 │   └──*.png/jpg                # Architecture diagrams and query result screenshots
 ├── [docker-compose.yaml]
 └── README.md
-```
+``` -->
 
 ## Data Sources
 
